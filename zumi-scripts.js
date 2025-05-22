@@ -10,6 +10,7 @@ console.error = (...args) => {
     },
     "*",
   );
+  console.log("ZS-CONSOLE-Error: ", args);
   originalConsoleError.apply(console, args);
 };
 
