@@ -1,6 +1,6 @@
 // Override console.error to send errors to parent
 
-console.log("zs-script: loadded");
+console.log("v0.0.1-zs-script: loadded");
 
 const originalConsoleError = console.error;
 console.error = (...args) => {
