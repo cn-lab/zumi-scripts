@@ -1,4 +1,4 @@
-console.log("v0.0.3-zs-script: loaded");
+console.log("v0.0.5-zs-script: loaded");
 
 // Override console.error to send errors to parent
 const originalConsoleError = console.error;
@@ -29,6 +29,7 @@ window.addEventListener("error", (event) => {
     },
     "*",
   );
+  console.log("ZS-WINDOW-Error: ", event);
 });
 
 window.addEventListener("unhandledrejection", (event) => {
@@ -39,6 +40,7 @@ window.addEventListener("unhandledrejection", (event) => {
     },
     "*",
   );
+  console.log("ZS-unhandled-Error: ", event);
 });
 
 // Enhanced askzumi function
