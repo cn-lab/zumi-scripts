@@ -1,23 +1,19 @@
+console.log("v0.0.3-zs-script: loaded");
+
 // Override console.error to send errors to parent
-
-console.log("v0.0.1-zs-script: loaded");
-
 const originalConsoleError = console.error;
 console.error = (...args) => {
-  // Send to parent window
   window.parent.postMessage(
     {
       type: "zs-console-error",
       data: args,
     },
     "*",
-  ); // Replace '*' with target origin for security
-
-  // Still log to browser console
+  );
   originalConsoleError.apply(console, args);
 };
 
-// Also catch uncaught errors
+// Error handlers
 window.addEventListener("error", (event) => {
   window.parent.postMessage(
     {
@@ -34,7 +30,6 @@ window.addEventListener("error", (event) => {
   );
 });
 
-// Catch unhandled promise rejections
 window.addEventListener("unhandledrejection", (event) => {
   window.parent.postMessage(
     {
@@ -45,13 +40,25 @@ window.addEventListener("unhandledrejection", (event) => {
   );
 });
 
-// Define the global function
+// Enhanced askzumi function
 window.askzumi = (...args) => {
-  console.log("askzumi called with args:", args); // Optional: log arguments
-  return "abcd"; // Temporary return value
+  // Send message to parent
+  window.parent.postMessage(
+    {
+      type: "ask-zumi",
+      data: args,
+      timestamp: new Date().toISOString(),
+    },
+    "*",
+  );
+
+  console.log("[askzumi] Called with args:", args);
+
+  // Return promise for future async support
+  return null;
 };
 
-// Optional: Protect against double initialization
+// Double-load protection
 if (window._askzumiLoaded) {
   console.warn("askzumi already loaded!");
 } else {
