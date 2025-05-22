@@ -44,3 +44,16 @@ window.addEventListener("unhandledrejection", (event) => {
     "*",
   );
 });
+
+// Define the global function
+window.askzumi = (...args) => {
+  console.log("askzumi called with args:", args); // Optional: log arguments
+  return "abcd"; // Temporary return value
+};
+
+// Optional: Protect against double initialization
+if (window._askzumiLoaded) {
+  console.warn("askzumi already loaded!");
+} else {
+  window._askzumiLoaded = true;
+}
